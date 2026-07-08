@@ -37,6 +37,7 @@ export interface UiStrings {
     metaDescription: string;
   };
   projectDetail: {
+    breadcrumbLabel: string;
     breadcrumb: string;
     badge: string;
     viewRepo: string;
@@ -140,6 +141,7 @@ export const ui: Localized<UiStrings> = {
         "Projetos de software de Daniel Macedo Silva: aplicação desktop de investimentos, jogo full-stack com IA generativa, landing full-stack de turismo cultural e APIs REST em Java + Spring Boot.",
     },
     projectDetail: {
+      breadcrumbLabel: "Trilha de navegação",
       breadcrumb: "projetos",
       badge: "destaque",
       viewRepo: "Ver repositório no GitHub",
@@ -251,6 +253,7 @@ export const ui: Localized<UiStrings> = {
         "Software projects by Daniel Macedo Silva: a desktop investment tracker, a full-stack game driven by generative AI, a full-stack cultural tourism landing page, and REST APIs built with Java and Spring Boot.",
     },
     projectDetail: {
+      breadcrumbLabel: "Breadcrumb",
       breadcrumb: "projects",
       badge: "featured",
       viewRepo: "View repository on GitHub",

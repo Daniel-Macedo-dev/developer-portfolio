@@ -40,7 +40,14 @@ export function LocaleShell({ locale, children }: LocaleShellProps) {
         >
           {ui[locale].skipToContent}
         </a>
-        <Header locale={locale} />
+        <Header
+          locale={locale}
+          strings={{
+            nav: ui[locale].nav,
+            header: ui[locale].header,
+            languageSwitcher: ui[locale].languageSwitcher,
+          }}
+        />
         <main id="conteudo" className="flex-1">
           {children}
         </main>

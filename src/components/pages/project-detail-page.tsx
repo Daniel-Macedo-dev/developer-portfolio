@@ -65,7 +65,7 @@ export function ProjectDetailPage({
   return (
     <article className="mx-auto w-full max-w-3xl px-4 py-16 sm:px-6 sm:py-20">
       <JsonLd data={projectJsonLd(project, locale)} />
-      <nav aria-label="Breadcrumb" className="font-mono text-xs text-faint">
+      <nav aria-label={strings.breadcrumbLabel} className="font-mono text-xs text-faint">
         <Link
           href={localePath("/projects", locale)}
           className="transition-colors hover:text-foreground"

@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { localePath, type Locale } from "@/data/locales";
 import { site } from "@/data/site";
-import { ui } from "@/data/ui";
+import type { UiStrings } from "@/data/ui";
 import { CloseIcon, GitHubIcon, LinkedInIcon, MenuIcon } from "@/components/icons";
 import { ExternalLink } from "@/components/external-link";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
@@ -19,10 +19,11 @@ function isActive(pathname: string, href: string): boolean {
 
 interface HeaderProps {
   locale: Locale;
+  /** Fatias do dicionário do idioma atual — o dicionário fica no servidor. */
+  strings: Pick<UiStrings, "nav" | "header" | "languageSwitcher">;
 }
 
-export function Header({ locale }: HeaderProps) {
-  const strings = ui[locale];
+export function Header({ locale, strings }: HeaderProps) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [lastPathname, setLastPathname] = useState(pathname);
@@ -89,7 +90,7 @@ export function Header({ locale }: HeaderProps) {
 
         <div className="flex items-center gap-2">
           <div className="hidden md:block">
-            <LanguageSwitcher locale={locale} />
+            <LanguageSwitcher locale={locale} label={strings.languageSwitcher.label} />
           </div>
           <ExternalLink
             href={site.links.github}
@@ -149,7 +150,7 @@ export function Header({ locale }: HeaderProps) {
               );
             })}
             <li className="mt-2 border-t border-border pt-3">
-              <LanguageSwitcher locale={locale} compact />
+              <LanguageSwitcher locale={locale} label={strings.languageSwitcher.label} compact />
             </li>
             <li className="flex gap-2">
               <ExternalLink
