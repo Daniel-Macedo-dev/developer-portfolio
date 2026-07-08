@@ -3,7 +3,8 @@ import Link from "next/link";
 
 import { education } from "@/data/profile";
 import { site } from "@/data/site";
-import { ExternalLink } from "@/components/external-link";
+import { ButtonLink } from "@/components/button-link";
+import { EducationCard } from "@/components/education-card";
 import {
   ArrowRightIcon,
   GitHubIcon,
@@ -62,24 +63,8 @@ export default function AboutPage() {
         </h2>
         <ol className="mt-5 space-y-4">
           {education.map((item) => (
-            <li
-              key={item.title}
-              className="rounded-card border border-border bg-surface p-6"
-            >
-              <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h3 className="text-base font-semibold text-foreground">
-                  {item.title}
-                </h3>
-                <span className="font-mono text-xs text-faint">
-                  {item.period}
-                </span>
-              </div>
-              <p className="mt-1 text-sm font-medium text-accent">
-                {item.institution}
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-muted">
-                {item.description}
-              </p>
+            <li key={item.title}>
+              <EducationCard item={item} />
             </li>
           ))}
         </ol>
@@ -93,27 +78,18 @@ export default function AboutPage() {
           Onde me encontrar
         </h2>
         <div className="mt-5 flex flex-wrap gap-3">
-          <a
-            href={`mailto:${site.email}`}
-            className="inline-flex min-h-11 items-center gap-2 rounded-md bg-accent-strong px-5 text-sm font-medium text-background transition-colors hover:bg-accent"
-          >
+          <ButtonLink href={`mailto:${site.email}`} variant="primary">
             <MailIcon width={16} height={16} />
             E-mail
-          </a>
-          <ExternalLink
-            href={site.links.github}
-            className="inline-flex min-h-11 items-center gap-2 rounded-md border border-border bg-surface px-5 text-sm font-medium text-foreground transition-colors hover:border-border-strong"
-          >
+          </ButtonLink>
+          <ButtonLink href={site.links.github}>
             <GitHubIcon width={16} height={16} />
             GitHub
-          </ExternalLink>
-          <ExternalLink
-            href={site.links.linkedin}
-            className="inline-flex min-h-11 items-center gap-2 rounded-md border border-border bg-surface px-5 text-sm font-medium text-foreground transition-colors hover:border-border-strong"
-          >
+          </ButtonLink>
+          <ButtonLink href={site.links.linkedin}>
             <LinkedInIcon width={16} height={16} />
             LinkedIn
-          </ExternalLink>
+          </ButtonLink>
         </div>
       </section>
 
