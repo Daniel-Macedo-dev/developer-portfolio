@@ -7,7 +7,7 @@ import {
   getProjectContent,
 } from "@/data/projects";
 import { ProjectDetailPage } from "@/components/pages/project-detail-page";
-import { buildAlternates } from "@/lib/metadata";
+import { buildPageMetadata } from "@/lib/metadata";
 
 export function generateStaticParams() {
   return getAllProjectSlugs().map((slug) => ({ slug }));
@@ -20,15 +20,13 @@ export async function generateMetadata({
   const project = getProjectBySlug(slug);
   if (!project) return {};
   const content = getProjectContent(project, "en");
-  return {
+  return buildPageMetadata({
+    locale: "en",
+    path: `/projects/${slug}`,
     title: project.name,
     description: content.summary,
-    alternates: buildAlternates(`/projects/${slug}`, "en"),
-    openGraph: {
-      title: project.name,
-      description: content.tagline,
-    },
-  };
+    ogDescription: content.tagline,
+  });
 }
 
 export default async function EnglishProjectPage({

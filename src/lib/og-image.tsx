@@ -1,13 +1,27 @@
 import { ImageResponse } from "next/og";
 
+import type { Locale } from "@/data/locales";
 import { site } from "@/data/site";
+import { ui } from "@/data/ui";
 
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
-export const alt = `${site.name} — Desenvolvedor de Software`;
+/**
+ * Composição compartilhada da imagem social. A marca é a mesma nos dois
+ * idiomas; apenas o posicionamento profissional (tagline) é localizado.
+ */
 
-/** Imagem de compartilhamento social gerada no build. */
-export default function OpenGraphImage() {
+export const ogImageSize = { width: 1200, height: 630 };
+export const ogImageContentType = "image/png";
+
+const taglines: Record<Locale, string> = {
+  "pt-BR": "Desenvolvimento de software, backend e soluções orientadas a dados",
+  en: "Software development, backend engineering and data-oriented applications",
+};
+
+export function ogImageAlt(locale: Locale): string {
+  return ui[locale].meta.siteTitle;
+}
+
+export function renderOgImage(locale: Locale): ImageResponse {
   return new ImageResponse(
     (
       <div
@@ -53,7 +67,7 @@ export default function OpenGraphImage() {
               lineHeight: 1.4,
             }}
           >
-            Desenvolvimento de software, backend e soluções orientadas a dados
+            {taglines[locale]}
           </div>
         </div>
         <div
@@ -68,6 +82,6 @@ export default function OpenGraphImage() {
         </div>
       </div>
     ),
-    { ...size },
+    { ...ogImageSize },
   );
 }
