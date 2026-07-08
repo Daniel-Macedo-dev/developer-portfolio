@@ -2,7 +2,7 @@
 
 Portfólio pessoal de [Daniel Macedo Silva](https://github.com/Daniel-Macedo-dev) — desenvolvimento de software, backend e soluções orientadas a dados.
 
-**Status:** primeira versão completa, pronta para deploy (ainda não publicada).
+**Produção:** https://developer-portfolio-daniels-projects-0382e1b8.vercel.app
 
 ## Stack
 
@@ -44,6 +44,13 @@ npx playwright install chromium
 ```
 
 O `qa:visual` espera um servidor já em execução (`npm run build && npm run start`).
+
+Para rodar a suíte E2E contra outra origem (ex.: o deployment de produção):
+
+```bash
+$env:PLAYWRIGHT_BASE_URL = "https://developer-portfolio-daniels-projects-0382e1b8.vercel.app"
+npm run test:e2e
+```
 
 ## Estrutura
 
@@ -87,23 +94,29 @@ Ver `.env.example`.
 
 O projeto está pronto para a Vercel (ou qualquer host com suporte a Next.js): build estático, sem backend, sem banco de dados e sem segredos.
 
-Checklist de deploy:
+Estado atual: projeto `developer-portfolio` na Vercel (time "Daniel's projects"), com `NEXT_PUBLIC_SITE_URL` configurada em produção com a URL real. Deploys via `npx vercel deploy --prod` a partir do estado local publicado na `main`.
 
-1. Importar o repositório na Vercel (framework Next.js detectado automaticamente; sem `vercel.json` — não é necessário).
-2. Configurar a variável `NEXT_PUBLIC_SITE_URL` com o domínio de produção (ex.: `https://<projeto>.vercel.app`).
+Para reproduzir do zero:
+
+1. Importar/linkar o repositório na Vercel (framework Next.js detectado automaticamente; sem `vercel.json` — não é necessário).
+2. Configurar a variável `NEXT_PUBLIC_SITE_URL` com o domínio de produção real.
 3. Deploy — todas as rotas são estáticas/SSG; sitemap, robots, favicon e imagem OG são gerados no build.
 4. Pós-deploy: conferir `/sitemap.xml`, `/robots.txt` e a pré-visualização de compartilhamento (OG) com o domínio real.
 
 ## Mídia dos projetos
 
-- As marcas em `public/projects/` são os ícones oficiais dos próprios projetos, copiados dos repositórios originais (proveniência verificada).
-- Não existem screenshots reais de interface nos repositórios públicos; nada foi fabricado. As capturas que mais agregariam no futuro: dashboard do BreakInv, partida do GuessMe e vitrine do JovemTour Store.
+Todas as imagens em `public/projects/` têm proveniência verificada:
+
+- **Marcas** (`breakinv-icon.svg`, `guessme-icon.svg`): ícones oficiais copiados dos repositórios originais dos projetos.
+- **Screenshots** (`breakinv/`, `guessme/`, `jovemtour-store/`): capturas das aplicações reais em execução local, com dados de demonstração. Nenhuma imagem fabricada ou mockup apresentado como produto.
+
+Os metadados de cada imagem (alt, legenda, dimensões) vivem no modelo tipado em `src/data/projects.ts` e são verificados por testes.
 
 ## Limitações conhecidas
 
-- Sem screenshots reais das interfaces dos projetos (ver seção acima).
 - Conteúdo apenas em português (pt-BR) nesta versão.
 - E2E cobre apenas Chromium (desktop + mobile emulado).
+- O fluxo de jogo do GuessMe com respostas da IA não pôde ser capturado (chave da API indisponível no ambiente de captura); as telas integradas mostram estados reais pré-partida.
 
 ## Direções futuras (não implementadas)
 
