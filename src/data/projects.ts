@@ -25,6 +25,11 @@ export interface Project {
   stack: string[];
   /** Somente URLs verificadas; projetos sem repositório público ficam sem link. */
   repoUrl?: string;
+  /**
+   * Marca/ícone real do projeto (proveniência verificada no repositório
+   * original). Nunca usar imagens fabricadas ou de banco de imagens.
+   */
+  logo?: string;
   /** Funcionalidades e características principais. */
   highlights: string[];
   caseStudy?: ProjectCaseStudy;
@@ -49,6 +54,7 @@ export const projects: Project[] = [
       "JUnit 5",
     ],
     repoUrl: "https://github.com/DeD-TechStack/BreakInv",
+    logo: "/projects/breakinv-icon.svg",
     highlights: [
       "Dashboard com visão consolidada da carteira e KPIs de patrimônio e lucro/prejuízo",
       "Snapshot diário para acompanhar a evolução da carteira ao longo do tempo",
@@ -101,6 +107,7 @@ export const projects: Project[] = [
       "Google Gemini API",
     ],
     repoUrl: "https://github.com/Daniel-Macedo-dev/GuessMe",
+    logo: "/projects/guessme-icon.svg",
     highlights: [
       "Partidas por categoria (Geral, Anime, Games, Filmes, Séries e Quadrinhos)",
       "Envio de perguntas do jogador e respostas geradas com apoio do Google Gemini",

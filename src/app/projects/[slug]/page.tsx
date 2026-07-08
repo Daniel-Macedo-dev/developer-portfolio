@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -89,7 +90,17 @@ export default async function ProjectPage({
       </nav>
 
       <header className="mt-6">
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-4">
+          {project.logo && (
+            <Image
+              src={project.logo}
+              alt=""
+              width={56}
+              height={56}
+              unoptimized
+              className="rounded-xl border border-border"
+            />
+          )}
           <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             {project.name}
           </h1>

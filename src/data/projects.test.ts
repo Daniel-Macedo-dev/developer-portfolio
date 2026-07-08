@@ -1,3 +1,6 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
+
 import { describe, expect, it } from "vitest";
 
 import {
@@ -34,6 +37,17 @@ describe("integridade dos dados de projetos", () => {
     for (const project of projects) {
       if (project.repoUrl) {
         expect(project.repoUrl).toMatch(/^https:\/\/github\.com\/[\w.-]+\/[\w.-]+$/);
+      }
+    }
+  });
+
+  it("aponta logos somente para arquivos reais dentro de public/", () => {
+    for (const project of projects) {
+      if (project.logo) {
+        expect(project.logo).toMatch(/^\/projects\/[\w.-]+\.(svg|png|webp)$/);
+        expect(
+          existsSync(path.join(process.cwd(), "public", project.logo)),
+        ).toBe(true);
       }
     }
   });
