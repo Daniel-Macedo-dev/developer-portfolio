@@ -17,12 +17,24 @@ export default defineConfig({
     trace: "on-first-retry",
   },
   projects: [
+    // Chromium executa a suíte completa nos dois viewports.
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
     {
       name: "mobile",
-      // Pixel 7 mantém a cobertura em Chromium (único browser instalado);
-      // viewport reduzido para 390 para casar com o QA visual.
+      // Viewport reduzido para 390 para casar com o QA visual.
       use: { ...devices["Pixel 7"], viewport: { width: 390, height: 844 } },
+    },
+    // Firefox e WebKit rodam jornadas de alto valor, não a suíte inteira:
+    // confiança de compatibilidade sem multiplicar o tempo de execução.
+    {
+      name: "firefox",
+      testMatch: ["bilingual.spec.ts", "media.spec.ts", "reduced-motion.spec.ts"],
+      use: { ...devices["Desktop Firefox"] },
+    },
+    {
+      name: "webkit-mobile",
+      testMatch: ["bilingual.spec.ts", "mobile.spec.ts", "reduced-motion.spec.ts"],
+      use: { ...devices["iPhone 13"] },
     },
   ],
   webServer: externalBaseUrl
