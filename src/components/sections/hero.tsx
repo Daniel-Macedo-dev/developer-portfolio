@@ -1,13 +1,17 @@
+import { localePath, type Locale } from "@/data/locales";
 import { site } from "@/data/site";
+import { ui } from "@/data/ui";
 import { ButtonLink } from "@/components/button-link";
-import {
-  ArrowRightIcon,
-  GitHubIcon,
-  LinkedInIcon,
-} from "@/components/icons";
+import { ArrowRightIcon, GitHubIcon, LinkedInIcon } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 
-export function Hero() {
+interface HeroProps {
+  locale: Locale;
+}
+
+export function Hero({ locale }: HeroProps) {
+  const strings = ui[locale].hero;
+
   return (
     <section className="relative overflow-hidden border-b border-border">
       {/* Realce radial sutil no topo, apenas composição. */}
@@ -17,28 +21,23 @@ export function Hero() {
       />
       <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
         <Reveal>
-          <p className="font-mono text-sm text-accent">
-            Olá, eu sou o Daniel —
-          </p>
+          <p className="font-mono text-sm text-accent">{strings.greeting}</p>
           <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-            Desenvolvimento de software, backend e soluções orientadas a dados.
+            {strings.headline}
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
-            Estudante de Análise e Desenvolvimento de Sistemas na FATEC Zona
-            Sul e Técnico em Informática, com experiência prática em Java,
-            Spring Boot, Python, SQL, APIs REST, bancos de dados e projetos
-            full-stack.
+            {strings.supporting}
           </p>
         </Reveal>
 
         <Reveal delay={0.1}>
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <ButtonLink
-              href="/projects"
+              href={localePath("/projects", locale)}
               variant="primary"
               className="w-full justify-center sm:w-auto"
             >
-              Ver projetos
+              {strings.ctaProjects}
               <ArrowRightIcon width={16} height={16} />
             </ButtonLink>
             <ButtonLink

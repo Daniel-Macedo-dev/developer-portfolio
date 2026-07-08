@@ -6,10 +6,10 @@ import { buildRootMetadata } from "@/lib/metadata";
 
 import "../globals.css";
 
-export const metadata: Metadata = buildRootMetadata("pt-BR", getSiteUrl());
+export const metadata: Metadata = buildRootMetadata("en", getSiteUrl());
 
-export default function RootLayout({
+export default function EnglishRootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  return <LocaleShell locale="pt-BR">{children}</LocaleShell>;
+  return <LocaleShell locale="en">{children}</LocaleShell>;
 }

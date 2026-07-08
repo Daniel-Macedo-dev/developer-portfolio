@@ -5,11 +5,11 @@ import { AboutPage } from "@/components/pages/about-page";
 import { buildAlternates } from "@/lib/metadata";
 
 export const metadata: Metadata = {
-  title: ui["pt-BR"].aboutPage.metaTitle,
-  description: ui["pt-BR"].aboutPage.metaDescription,
-  alternates: buildAlternates("/about", "pt-BR"),
+  title: ui.en.aboutPage.metaTitle,
+  description: ui.en.aboutPage.metaDescription,
+  alternates: buildAlternates("/about", "en"),
 };
 
-export default function About() {
-  return <AboutPage locale="pt-BR" />;
+export default function EnglishAbout() {
+  return <AboutPage locale="en" />;
 }

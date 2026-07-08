@@ -1,10 +1,24 @@
 import Link from "next/link";
 
-import { navItems, site } from "@/data/site";
+import { localePath, type Locale } from "@/data/locales";
+import { site } from "@/data/site";
+import { ui } from "@/data/ui";
 import { ExternalLink } from "@/components/external-link";
 import { GitHubIcon, LinkedInIcon, MailIcon } from "@/components/icons";
 
-export function Footer() {
+interface FooterProps {
+  locale: Locale;
+}
+
+export function Footer({ locale }: FooterProps) {
+  const strings = ui[locale];
+  const navItems = [
+    { href: localePath("/", locale), label: strings.nav.home },
+    { href: localePath("/projects", locale), label: strings.nav.projects },
+    { href: localePath("/about", locale), label: strings.nav.about },
+    { href: `${localePath("/", locale)}#contato`, label: strings.nav.contact },
+  ];
+
   return (
     <footer className="border-t border-border bg-surface/40">
       <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
@@ -15,14 +29,13 @@ export function Footer() {
               <span className="text-accent">.macedo</span>
             </p>
             <p className="mt-3 text-sm leading-relaxed text-muted">
-              Desenvolvimento de software, backend e soluções orientadas a
-              dados.
+              {strings.footer.tagline}
             </p>
           </div>
 
-          <nav aria-label="Navegação do rodapé">
+          <nav aria-label={strings.footer.navigation}>
             <h2 className="text-xs font-semibold uppercase tracking-wider text-faint">
-              Navegação
+              {strings.footer.navigation}
             </h2>
             <ul className="mt-3 space-y-2">
               {navItems.map((item) => (
@@ -40,7 +53,7 @@ export function Footer() {
 
           <div>
             <h2 className="text-xs font-semibold uppercase tracking-wider text-faint">
-              Contato
+              {strings.footer.contact}
             </h2>
             <ul className="mt-3 space-y-2">
               <li>
@@ -75,8 +88,7 @@ export function Footer() {
         </div>
 
         <p className="mt-10 border-t border-border pt-6 text-xs text-faint">
-          © {new Date().getFullYear()} {site.name}. Construído com Next.js,
-          TypeScript e Tailwind CSS.
+          © {new Date().getFullYear()} {site.name}. {strings.footer.builtWith}
         </p>
       </div>
     </footer>

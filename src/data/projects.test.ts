@@ -3,11 +3,13 @@ import path from "node:path";
 
 import { describe, expect, it } from "vitest";
 
+import { locales } from "./locales";
 import {
   backendProjects,
   featuredProjects,
   getAllProjectSlugs,
   getProjectBySlug,
+  getProjectContent,
   projects,
 } from "./projects";
 
@@ -23,13 +25,31 @@ describe("integridade dos dados de projetos", () => {
     }
   });
 
-  it("preenche os campos obrigatórios de todos os projetos", () => {
+  it("preenche os campos obrigatórios em todos os idiomas", () => {
     for (const project of projects) {
       expect(project.name.trim()).not.toBe("");
-      expect(project.tagline.trim()).not.toBe("");
-      expect(project.summary.trim()).not.toBe("");
       expect(project.stack.length).toBeGreaterThan(0);
-      expect(project.highlights.length).toBeGreaterThan(0);
+      for (const locale of locales) {
+        const content = getProjectContent(project, locale);
+        expect(content.tagline.trim(), `${project.slug}/${locale}`).not.toBe("");
+        expect(content.summary.trim(), `${project.slug}/${locale}`).not.toBe("");
+        expect(content.highlights.length, `${project.slug}/${locale}`).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it("mantém paridade estrutural de conteúdo entre pt-BR e en", () => {
+    for (const project of projects) {
+      const pt = project.content["pt-BR"];
+      const en = project.content.en;
+      expect(en.highlights.length, project.slug).toBe(pt.highlights.length);
+      expect(Boolean(en.caseStudy), project.slug).toBe(Boolean(pt.caseStudy));
+      if (pt.caseStudy && en.caseStudy) {
+        expect(en.caseStudy.engineering.length).toBe(pt.caseStudy.engineering.length);
+        expect(en.caseStudy.architecture?.length).toBe(pt.caseStudy.architecture?.length);
+        expect(en.caseStudy.challenges?.length).toBe(pt.caseStudy.challenges?.length);
+      }
+      expect(en.screenshots?.length, project.slug).toBe(pt.screenshots?.length);
     }
   });
 
@@ -52,24 +72,25 @@ describe("integridade dos dados de projetos", () => {
     }
   });
 
-  it("aponta screenshots para arquivos reais com alt, legenda e dimensões", () => {
+  it("aponta screenshots para arquivos reais com texto localizado completo", () => {
     for (const project of projects) {
-      for (const shot of project.screenshots ?? []) {
+      const shots = project.screenshots ?? [];
+      for (const shot of shots) {
         expect(
           existsSync(path.join(process.cwd(), "public", shot.src)),
           `arquivo ausente: ${shot.src}`,
         ).toBe(true);
-        expect(shot.alt.trim().length).toBeGreaterThan(10);
-        expect(shot.caption.trim()).not.toBe("");
         expect(shot.width).toBeGreaterThan(0);
         expect(shot.height).toBeGreaterThan(0);
       }
-    }
-  });
-
-  it("dá screenshots reais a todos os projetos em destaque", () => {
-    for (const project of featuredProjects) {
-      expect(project.screenshots?.length ?? 0).toBeGreaterThanOrEqual(3);
+      for (const locale of locales) {
+        const text = getProjectContent(project, locale).screenshots ?? [];
+        expect(text.length, `${project.slug}/${locale}`).toBe(shots.length);
+        for (const t of text) {
+          expect(t.alt.trim().length).toBeGreaterThan(10);
+          expect(t.caption.trim()).not.toBe("");
+        }
+      }
     }
   });
 
@@ -89,12 +110,16 @@ describe("integridade dos dados de projetos", () => {
     expect(featuredSlugs).toContain("jovemtour-store");
   });
 
-  it("dá case study completo a todos os projetos em destaque", () => {
+  it("dá case study completo e screenshots reais aos projetos em destaque", () => {
     for (const project of featuredProjects) {
-      expect(project.caseStudy).toBeDefined();
-      expect(project.caseStudy?.context.trim()).not.toBe("");
-      expect(project.caseStudy?.solution.trim()).not.toBe("");
-      expect(project.caseStudy?.engineering.length).toBeGreaterThan(0);
+      expect(project.screenshots?.length ?? 0).toBeGreaterThanOrEqual(3);
+      for (const locale of locales) {
+        const content = getProjectContent(project, locale);
+        expect(content.caseStudy).toBeDefined();
+        expect(content.caseStudy?.context.trim()).not.toBe("");
+        expect(content.caseStudy?.solution.trim()).not.toBe("");
+        expect(content.caseStudy?.engineering.length).toBeGreaterThan(0);
+      }
     }
   });
 

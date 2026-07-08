@@ -1,17 +1,25 @@
+import type { Locale } from "@/data/locales";
 import { featuredProjects } from "@/data/projects";
+import { ui } from "@/data/ui";
 import { FeaturedProjectsGrid } from "@/components/projects/featured-projects-grid";
 import { Section } from "@/components/section";
 
-export function FeaturedProjects() {
+interface FeaturedProjectsProps {
+  locale: Locale;
+}
+
+export function FeaturedProjects({ locale }: FeaturedProjectsProps) {
+  const strings = ui[locale].featured;
+
   return (
     <Section
       id="projetos"
-      eyebrow="projetos em destaque"
-      title="Trabalhos que representam minha engenharia"
-      description="Projetos completos com problema, solução e decisões técnicas documentadas — do desktop local-first a integrações com IA generativa."
+      eyebrow={strings.eyebrow}
+      title={strings.title}
+      description={strings.description}
       className="border-t border-border bg-surface/30"
     >
-      <FeaturedProjectsGrid projects={featuredProjects} />
+      <FeaturedProjectsGrid projects={featuredProjects} locale={locale} />
     </Section>
   );
 }

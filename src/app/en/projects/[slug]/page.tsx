@@ -15,15 +15,15 @@ export function generateStaticParams() {
 
 export async function generateMetadata({
   params,
-}: PageProps<"/projects/[slug]">): Promise<Metadata> {
+}: PageProps<"/en/projects/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project) return {};
-  const content = getProjectContent(project, "pt-BR");
+  const content = getProjectContent(project, "en");
   return {
     title: project.name,
     description: content.summary,
-    alternates: buildAlternates(`/projects/${slug}`, "pt-BR"),
+    alternates: buildAlternates(`/projects/${slug}`, "en"),
     openGraph: {
       title: project.name,
       description: content.tagline,
@@ -31,12 +31,12 @@ export async function generateMetadata({
   };
 }
 
-export default async function ProjectPage({
+export default async function EnglishProjectPage({
   params,
-}: PageProps<"/projects/[slug]">) {
+}: PageProps<"/en/projects/[slug]">) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project) notFound();
 
-  return <ProjectDetailPage project={project} locale="pt-BR" />;
+  return <ProjectDetailPage project={project} locale="en" />;
 }
