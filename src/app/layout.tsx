@@ -19,6 +19,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
+  // Canonical relativo: resolvido por rota a partir do metadataBase.
+  alternates: { canonical: "./" },
   title: {
     default: `${site.name} — Desenvolvedor de Software`,
     template: `%s — ${site.shortName}`,
