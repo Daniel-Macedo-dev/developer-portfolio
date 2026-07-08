@@ -1,5 +1,4 @@
-import Link from "next/link";
-
+import { ButtonLink } from "@/components/button-link";
 import { ArrowRightIcon } from "@/components/icons";
 
 export default function NotFound() {
@@ -14,19 +13,13 @@ export default function NotFound() {
         para o início ou explorar os projetos?
       </p>
       <div className="mt-8 flex flex-wrap justify-center gap-3">
-        <Link
-          href="/"
-          className="inline-flex min-h-11 items-center gap-2 rounded-md bg-accent-strong px-5 text-sm font-medium text-background transition-colors hover:bg-accent"
-        >
+        <ButtonLink href="/" variant="primary">
           Voltar ao início
-        </Link>
-        <Link
-          href="/projects"
-          className="inline-flex min-h-11 items-center gap-2 rounded-md border border-border bg-surface px-5 text-sm font-medium text-foreground transition-colors hover:border-border-strong"
-        >
+        </ButtonLink>
+        <ButtonLink href="/projects">
           Ver projetos
           <ArrowRightIcon width={16} height={16} />
-        </Link>
+        </ButtonLink>
       </div>
     </div>
   );

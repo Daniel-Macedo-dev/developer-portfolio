@@ -1,7 +1,5 @@
-import Link from "next/link";
-
 import { site } from "@/data/site";
-import { ExternalLink } from "@/components/external-link";
+import { ButtonLink } from "@/components/button-link";
 import {
   ArrowRightIcon,
   GitHubIcon,
@@ -15,7 +13,7 @@ export function Hero() {
       {/* Realce radial sutil no topo, apenas composição. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(ellipse_at_top,rgba(255,138,61,0.08),transparent_65%)]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(ellipse_at_top,var(--color-accent-soft),transparent_65%)]"
       />
       <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
         <Reveal>
@@ -35,27 +33,18 @@ export function Hero() {
 
         <Reveal delay={0.1}>
           <div className="mt-10 flex flex-wrap items-center gap-3">
-            <Link
-              href="/projects"
-              className="inline-flex min-h-11 items-center gap-2 rounded-md bg-accent-strong px-5 text-sm font-medium text-background transition-colors hover:bg-accent"
-            >
+            <ButtonLink href="/projects" variant="primary">
               Ver projetos
               <ArrowRightIcon width={16} height={16} />
-            </Link>
-            <ExternalLink
-              href={site.links.github}
-              className="inline-flex min-h-11 items-center gap-2 rounded-md border border-border bg-surface px-5 text-sm font-medium text-foreground transition-colors hover:border-border-strong"
-            >
+            </ButtonLink>
+            <ButtonLink href={site.links.github}>
               <GitHubIcon width={16} height={16} />
               GitHub
-            </ExternalLink>
-            <ExternalLink
-              href={site.links.linkedin}
-              className="inline-flex min-h-11 items-center gap-2 rounded-md border border-border bg-surface px-5 text-sm font-medium text-foreground transition-colors hover:border-border-strong"
-            >
+            </ButtonLink>
+            <ButtonLink href={site.links.linkedin}>
               <LinkedInIcon width={16} height={16} />
               LinkedIn
-            </ExternalLink>
+            </ButtonLink>
           </div>
         </Reveal>
       </div>

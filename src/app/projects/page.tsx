@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { backendProjects, featuredProjects } from "@/data/projects";
-import { FeaturedProjectCard } from "@/components/projects/featured-project-card";
+import { FeaturedProjectsGrid } from "@/components/projects/featured-projects-grid";
 import { ProjectCard } from "@/components/projects/project-card";
 import { Reveal } from "@/components/motion/reveal";
 
@@ -12,8 +12,6 @@ export const metadata: Metadata = {
 };
 
 export default function ProjectsPage() {
-  const [main, ...others] = featuredProjects;
-
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
       <header>
@@ -38,19 +36,8 @@ export default function ProjectsPage() {
         >
           Em destaque
         </h2>
-        <div className="mt-6 space-y-6">
-          {main && (
-            <Reveal>
-              <FeaturedProjectCard project={main} prominent />
-            </Reveal>
-          )}
-          <div className="grid gap-6 lg:grid-cols-2">
-            {others.map((project, index) => (
-              <Reveal key={project.slug} delay={index * 0.06}>
-                <FeaturedProjectCard project={project} />
-              </Reveal>
-            ))}
-          </div>
+        <div className="mt-6">
+          <FeaturedProjectsGrid projects={featuredProjects} />
         </div>
       </section>
 

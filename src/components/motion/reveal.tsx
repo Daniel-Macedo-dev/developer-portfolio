@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { LazyMotion, domAnimation, m, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 
 interface RevealProps {
@@ -22,14 +22,16 @@ export function Reveal({ children, className, delay = 0 }: RevealProps) {
   }
 
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-48px" }}
-      transition={{ duration: 0.45, delay, ease: "easeOut" }}
-    >
-      {children}
-    </motion.div>
+    <LazyMotion features={domAnimation} strict>
+      <m.div
+        className={className}
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-48px" }}
+        transition={{ duration: 0.45, delay, ease: "easeOut" }}
+      >
+        {children}
+      </m.div>
+    </LazyMotion>
   );
 }

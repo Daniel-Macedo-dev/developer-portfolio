@@ -7,7 +7,7 @@ import {
   getProjectBySlug,
   projects,
 } from "@/data/projects";
-import { ExternalLink } from "@/components/external-link";
+import { ButtonLink } from "@/components/button-link";
 import {
   ArrowRightIcon,
   ArrowUpRightIcon,
@@ -114,14 +114,11 @@ export default async function ProjectPage({
 
         {project.repoUrl && (
           <div className="mt-6">
-            <ExternalLink
-              href={project.repoUrl}
-              className="inline-flex min-h-11 items-center gap-2 rounded-md border border-border bg-surface px-5 text-sm font-medium text-foreground transition-colors hover:border-border-strong"
-            >
+            <ButtonLink href={project.repoUrl}>
               <GitHubIcon width={16} height={16} />
               Ver repositório no GitHub
               <ArrowUpRightIcon width={14} height={14} />
-            </ExternalLink>
+            </ButtonLink>
           </div>
         )}
       </header>

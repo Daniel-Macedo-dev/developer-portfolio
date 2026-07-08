@@ -1,5 +1,5 @@
 import { site } from "@/data/site";
-import { ExternalLink } from "@/components/external-link";
+import { ButtonLink } from "@/components/button-link";
 import { GitHubIcon, LinkedInIcon, MailIcon } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 
@@ -21,27 +21,18 @@ export function Contact() {
               GitHub.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <a
-                href={`mailto:${site.email}`}
-                className="inline-flex min-h-11 items-center gap-2 rounded-md bg-accent-strong px-5 text-sm font-medium text-background transition-colors hover:bg-accent"
-              >
+              <ButtonLink href={`mailto:${site.email}`} variant="primary">
                 <MailIcon width={16} height={16} />
                 {site.email}
-              </a>
-              <ExternalLink
-                href={site.links.linkedin}
-                className="inline-flex min-h-11 items-center gap-2 rounded-md border border-border bg-background px-5 text-sm font-medium text-foreground transition-colors hover:border-border-strong"
-              >
+              </ButtonLink>
+              <ButtonLink href={site.links.linkedin}>
                 <LinkedInIcon width={16} height={16} />
                 LinkedIn
-              </ExternalLink>
-              <ExternalLink
-                href={site.links.github}
-                className="inline-flex min-h-11 items-center gap-2 rounded-md border border-border bg-background px-5 text-sm font-medium text-foreground transition-colors hover:border-border-strong"
-              >
+              </ButtonLink>
+              <ButtonLink href={site.links.github}>
                 <GitHubIcon width={16} height={16} />
                 GitHub
-              </ExternalLink>
+              </ButtonLink>
             </div>
           </div>
         </Reveal>
