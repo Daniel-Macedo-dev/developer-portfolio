@@ -8,5 +8,7 @@ export default defineConfig({
     environment: "jsdom",
     // Necessário para o auto-cleanup do Testing Library entre testes.
     globals: true,
+    // Testes de browser vivem em e2e/ e pertencem ao Playwright.
+    include: ["src/**/*.test.{ts,tsx}"],
   },
 });
