@@ -67,6 +67,31 @@ test("navegação inglesa permanece em inglês", async ({ page, isMobile }) => {
   await expect(page.getByText("main project")).toBeVisible();
 });
 
+test("imagem social é localizada e publicamente acessível", async ({
+  page,
+  request,
+  isMobile,
+}) => {
+  test.skip(isMobile, "metadata é igual entre viewports; basta desktop");
+  for (const [path, ogPath] of [
+    ["/", "/og/pt-BR"],
+    ["/en", "/og/en"],
+    ["/projects/breakinv", "/og/pt-BR"],
+    ["/en/projects/breakinv", "/og/en"],
+  ] as const) {
+    await page.goto(path);
+    const ogImage = page.locator('meta[property="og:image"]');
+    await expect(ogImage).toHaveAttribute(
+      "content",
+      new RegExp(`${ogPath.replace("/", "\\/")}$`),
+    );
+    const imageUrl = await ogImage.getAttribute("content");
+    const response = await request.get(imageUrl!);
+    expect(response.status()).toBe(200);
+    expect(response.headers()["content-type"]).toContain("image/png");
+  }
+});
+
 test("hreflang e canonical presentes na home inglesa", async ({ page }) => {
   await page.goto("/en");
   const canonical = page.locator('link[rel="canonical"]');
