@@ -21,15 +21,25 @@ export function Contact() {
               GitHub.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <ButtonLink href={`mailto:${site.email}`} variant="primary">
-                <MailIcon width={16} height={16} />
-                {site.email}
+              <ButtonLink
+                href={`mailto:${site.email}`}
+                variant="primary"
+                className="w-full max-w-full justify-center sm:w-auto"
+              >
+                <MailIcon width={16} height={16} className="shrink-0" />
+                <span className="truncate">{site.email}</span>
               </ButtonLink>
-              <ButtonLink href={site.links.linkedin}>
+              <ButtonLink
+                href={site.links.linkedin}
+                className="flex-1 justify-center sm:flex-none"
+              >
                 <LinkedInIcon width={16} height={16} />
                 LinkedIn
               </ButtonLink>
-              <ButtonLink href={site.links.github}>
+              <ButtonLink
+                href={site.links.github}
+                className="flex-1 justify-center sm:flex-none"
+              >
                 <GitHubIcon width={16} height={16} />
                 GitHub
               </ButtonLink>

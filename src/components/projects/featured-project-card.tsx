@@ -54,13 +54,13 @@ export function FeaturedProjectCard({
         ))}
       </ul>
 
-      <div className="mt-6 flex flex-wrap gap-2">
+      <div className="mb-6 mt-6 flex flex-wrap gap-2">
         {project.stack.map((tech) => (
           <TechTag key={tech} label={tech} />
         ))}
       </div>
 
-      <div className="mt-6 flex flex-wrap items-center gap-4 border-t border-border pt-5">
+      <div className="mt-auto flex flex-wrap items-center gap-4 border-t border-border pt-5">
         <span className="inline-flex items-center gap-1.5 text-sm font-medium text-accent transition-transform group-hover:translate-x-0.5">
           Ver case study
           <ArrowRightIcon width={16} height={16} />

@@ -16,6 +16,8 @@ interface ButtonLinkProps {
   href: string;
   variant?: ButtonVariant;
   children: ReactNode;
+  /** Classes adicionais (ex.: largura total no mobile). */
+  className?: string;
 }
 
 /**
@@ -26,8 +28,11 @@ export function ButtonLink({
   href,
   variant = "secondary",
   children,
+  className: extraClassName,
 }: ButtonLinkProps) {
-  const className = variantClasses[variant];
+  const className = extraClassName
+    ? `${variantClasses[variant]} ${extraClassName}`
+    : variantClasses[variant];
 
   if (href.startsWith("http")) {
     return (
