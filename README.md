@@ -120,6 +120,6 @@ Os metadados de cada imagem (alt, legenda, dimensões) vivem no modelo tipado em
 
 ## Direções futuras (não implementadas)
 
-- Screenshots reais dos projetos nos case studies
 - Versão em inglês
+- Captura do fluxo de jogo do GuessMe com respostas reais da IA
 - Textos técnicos longos (possível adoção de MDX quando houver conteúdo editorial)
