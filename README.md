@@ -11,7 +11,7 @@ Portfólio pessoal de [Daniel Macedo Silva](https://github.com/Daniel-Macedo-dev
 - [Tailwind CSS v4](https://tailwindcss.com) (tokens de design via `@theme`)
 - [Motion](https://motion.dev) para animações de entrada (com suporte a `prefers-reduced-motion`)
 - [Vitest](https://vitest.dev) + Testing Library para testes unitários
-- [Playwright](https://playwright.dev) (Chromium) para jornadas E2E e QA visual
+- [Playwright](https://playwright.dev) (Chromium completo + jornadas de alto valor em Firefox e WebKit) para E2E e QA visual
 
 ## Requisitos
 
@@ -37,11 +37,13 @@ npm run test:e2e   # jornadas de browser (Playwright; faz build + start sozinho)
 npm run qa:visual  # captura screenshots das rotas em 8 viewports (.qa-screenshots/)
 ```
 
-Para os comandos de browser é preciso instalar o Chromium do Playwright uma vez:
+Para os comandos de browser é preciso instalar os browsers do Playwright uma vez:
 
 ```bash
-npx playwright install chromium
+npx playwright install chromium firefox webkit
 ```
+
+A suíte completa roda em Chromium (desktop + mobile emulado); Firefox e WebKit executam as jornadas de maior valor (bilinguismo, mídia, menu mobile, reduced motion) via `testMatch` — compatibilidade sem duplicar a suíte inteira.
 
 O `qa:visual` espera um servidor já em execução (`npm run build && npm run start`).
 
@@ -63,7 +65,7 @@ src/
     sitemap.ts          # sitemap gerado
     robots.ts           # robots.txt
     icon.tsx            # favicon gerado no build
-    opengraph-image.tsx # imagem social gerada no build
+    og/[locale]/        # imagem social por idioma (/og/pt-BR, /og/en), gerada no build
   components/           # layout, seções da home, cards de projeto, primitivas
   data/                 # fonte única de conteúdo tipado
     site.ts             # identidade, links e navegação
@@ -91,6 +93,7 @@ A integridade desses dados é verificada por testes (`src/data/projects.test.ts`
 | Variável | Uso |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | URL pública do site, usada em metadata, sitemap e Open Graph. Fallback local: `http://localhost:3000`. |
+| `GOOGLE_SITE_VERIFICATION` | Opcional. Token público de verificação do Search Console; quando configurado, emite a meta tag `google-site-verification` nos dois idiomas. |
 
 Ver `.env.example`.
 
@@ -119,7 +122,9 @@ Os metadados de cada imagem (alt, legenda, dimensões) vivem no modelo tipado em
 ## Dados estruturados e busca
 
 - JSON-LD factual mínimo: `Person` e `WebSite` na home e `SoftwareSourceCode` por projeto — somente dados públicos verificados (sem cargos, métricas ou perfis inventados), com testes de shape.
-- **Search Console (passos futuros, sem token inventado):** criar a propriedade URL-prefix para a URL de produção, verificar por meta tag (adicionar o token real via metadata `verification.google` ou arquivo HTML em `public/`) e submeter `/sitemap.xml`. O mesmo sitemap serve para o Bing Webmaster (que aceita importar do Search Console).
+- **Compartilhamento social:** cada página emite `og:image`/`twitter:image` apontando para a imagem do próprio idioma (`/og/pt-BR`, `/og/en`), com título, descrição, `og:url` e alt localizados. As imagens são geradas no build por uma rota estática explícita (`src/app/og/[locale]/route.tsx`) — rota explícita em vez da convenção `opengraph-image` porque páginas com `openGraph` próprio perdiam a imagem herdada no merge de metadata.
+- **Presença em busca (auditada em 2026-07-08):** consultas `site:` no Google, Bing e DuckDuckGo não retornaram resultados para o domínio de produção — classificação: *não encontrado nos resultados públicos auditados* (indexação ainda pendente; o domínio `.vercel.app` é novo para os crawlers). Fetches com user agents de crawler (Googlebot, Bingbot, LinkedInBot, Twitterbot, facebookexternalhit) recebem 200 com HTML e metadata completos — não há bloqueio técnico.
+- **Search Console (pendente de acesso autenticado):** criar a propriedade URL-prefix para a URL de produção, verificar por meta tag — basta configurar `GOOGLE_SITE_VERIFICATION` na Vercel com o token real e redeployar — e submeter `/sitemap.xml`. O mesmo sitemap serve para o Bing Webmaster (que aceita importar do Search Console). IndexNow foi avaliado e rejeitado: site estático com mudanças raras não justifica a manutenção de chave/submissões.
 
 ## Observabilidade
 
@@ -127,7 +132,9 @@ Web Vitals reais via [Vercel Speed Insights](https://vercel.com/docs/speed-insig
 
 ## Limitações conhecidas
 
-- E2E cobre apenas Chromium (desktop + mobile emulado).
+- Firefox e WebKit cobrem as jornadas de alto valor, não a suíte E2E completa (decisão intencional de custo/benefício).
+- Sem acesso autenticado ao Search Console/Bing Webmaster no ambiente de desenvolvimento: propriedade não verificada e sitemap não submetido — o suporte via `GOOGLE_SITE_VERIFICATION` deixa a verificação a um passo (configurar env + redeploy).
+- Speed Insights está ativo em produção (script servido, endpoint de vitals respondendo), mas os dados de campo do dashboard não são acessíveis por CLI/API — nenhum número de campo é afirmado aqui.
 - URLs totalmente fora das rotas (ex.: `/xyz`) retornam o 404 padrão do Next com status correto; os 404 estilizados e localizados cobrem os slugs inválidos de projeto (consequência de múltiplos root layouts — a alternativa exigiria uma flag experimental).
 - O fluxo de jogo do GuessMe com respostas da IA não pôde ser capturado (chave da API indisponível no ambiente de captura); as telas integradas mostram estados reais pré-partida.
 
