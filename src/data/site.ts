@@ -1,9 +1,6 @@
 export const site = {
   name: "Daniel Macedo Silva",
   shortName: "Daniel Macedo",
-  role: "Desenvolvimento de software, backend e soluções orientadas a dados",
-  description:
-    "Portfólio de Daniel Macedo Silva — desenvolvimento de software, backend e soluções orientadas a dados, com experiência prática em Java, Spring Boot, Python, SQL, APIs REST e projetos full-stack.",
   email: "danielmacedosilva11@gmail.com",
   links: {
     github: "https://github.com/Daniel-Macedo-dev",
@@ -11,13 +8,6 @@ export const site = {
     repository: "https://github.com/Daniel-Macedo-dev/developer-portfolio",
   },
 } as const;
-
-export const navItems = [
-  { href: "/", label: "Início" },
-  { href: "/projects", label: "Projetos" },
-  { href: "/about", label: "Sobre" },
-  { href: "/#contato", label: "Contato" },
-] as const;
 
 /**
  * Base URL used for metadata, sitemap and Open Graph.
