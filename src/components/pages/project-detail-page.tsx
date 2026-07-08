@@ -9,6 +9,8 @@ import {
 } from "@/data/projects";
 import { ui } from "@/data/ui";
 import { ButtonLink } from "@/components/button-link";
+import { JsonLd } from "@/components/json-ld";
+import { projectJsonLd } from "@/lib/structured-data";
 import {
   ArrowRightIcon,
   ArrowUpRightIcon,
@@ -62,6 +64,7 @@ export function ProjectDetailPage({
 
   return (
     <article className="mx-auto w-full max-w-3xl px-4 py-16 sm:px-6 sm:py-20">
+      <JsonLd data={projectJsonLd(project, locale)} />
       <nav aria-label="Breadcrumb" className="font-mono text-xs text-faint">
         <Link
           href={localePath("/projects", locale)}

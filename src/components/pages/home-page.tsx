@@ -1,4 +1,6 @@
 import type { Locale } from "@/data/locales";
+import { JsonLd } from "@/components/json-ld";
+import { personJsonLd, webSiteJsonLd } from "@/lib/structured-data";
 import { BackendProjects } from "@/components/sections/backend-projects";
 import { Capabilities } from "@/components/sections/capabilities";
 import { Contact } from "@/components/sections/contact";
@@ -9,6 +11,8 @@ import { Hero } from "@/components/sections/hero";
 export function HomePage({ locale }: { locale: Locale }) {
   return (
     <>
+      <JsonLd data={personJsonLd(locale)} />
+      <JsonLd data={webSiteJsonLd(locale)} />
       <Hero locale={locale} />
       <Capabilities locale={locale} />
       <FeaturedProjects locale={locale} />
