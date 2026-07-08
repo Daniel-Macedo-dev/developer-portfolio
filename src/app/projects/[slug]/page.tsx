@@ -98,7 +98,7 @@ export default async function ProjectPage({
               width={56}
               height={56}
               unoptimized
-              className="rounded-xl border border-border"
+              className="rounded-card border border-border"
             />
           )}
           <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
