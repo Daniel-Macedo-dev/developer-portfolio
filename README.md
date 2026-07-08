@@ -2,7 +2,7 @@
 
 Portfólio pessoal de [Daniel Macedo Silva](https://github.com/Daniel-Macedo-dev) — desenvolvimento de software, backend e soluções orientadas a dados.
 
-**Produção:** https://developer-portfolio-daniels-projects-0382e1b8.vercel.app
+**Produção:** https://developer-portfolio-umber-five.vercel.app
 
 ## Stack
 
@@ -48,7 +48,7 @@ O `qa:visual` espera um servidor já em execução (`npm run build && npm run st
 Para rodar a suíte E2E contra outra origem (ex.: o deployment de produção):
 
 ```bash
-$env:PLAYWRIGHT_BASE_URL = "https://developer-portfolio-daniels-projects-0382e1b8.vercel.app"
+$env:PLAYWRIGHT_BASE_URL = "https://developer-portfolio-umber-five.vercel.app"
 npm run test:e2e
 ```
 
