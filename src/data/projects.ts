@@ -1,5 +1,18 @@
 export type ProjectCategory = "flagship" | "backend";
 
+/**
+ * Screenshot real da aplicação em execução (proveniência verificada —
+ * capturado do produto real rodando localmente). Nunca usar mockups ou
+ * imagens fabricadas.
+ */
+export interface ProjectImage {
+  src: string;
+  alt: string;
+  caption: string;
+  width: number;
+  height: number;
+}
+
 export interface ProjectCaseStudy {
   /** Problema ou contexto que motivou o projeto. */
   context: string;
@@ -30,6 +43,8 @@ export interface Project {
    * original). Nunca usar imagens fabricadas ou de banco de imagens.
    */
   logo?: string;
+  /** Screenshots reais da aplicação em execução. */
+  screenshots?: ProjectImage[];
   /** Funcionalidades e características principais. */
   highlights: string[];
   caseStudy?: ProjectCaseStudy;
@@ -55,6 +70,48 @@ export const projects: Project[] = [
     ],
     repoUrl: "https://github.com/DeD-TechStack/BreakInv",
     logo: "/projects/breakinv-icon.svg",
+    screenshots: [
+      {
+        src: "/projects/breakinv/dashboard.png",
+        alt: "Dashboard do BreakInv com KPIs de patrimônio total, lucro acumulado, comparação com o CDI, saúde da carteira e gráficos de composição",
+        caption:
+          "Dashboard: visão consolidada da carteira com KPIs, comparação com o CDI e saúde de diversificação",
+        width: 1280,
+        height: 712,
+      },
+      {
+        src: "/projects/breakinv/analise-ativos.png",
+        alt: "Página de análise de ativos do BreakInv mostrando cotação, variação, máximas e mínimas de 52 semanas e volume do ticker PETR4",
+        caption:
+          "Análise de ativos: consulta por ticker com cotação e indicadores reais via integração com a Brapi",
+        width: 1280,
+        height: 712,
+      },
+      {
+        src: "/projects/breakinv/carteira.png",
+        alt: "Tela de carteira do BreakInv com tabela de investimentos por categoria, liquidez, valor investido e ações de editar, vender e excluir",
+        caption:
+          "Carteira: gestão dos ativos com categorias, liquidez e operações de compra e venda",
+        width: 1280,
+        height: 712,
+      },
+      {
+        src: "/projects/breakinv/diversificacao.png",
+        alt: "Página de diversificação do BreakInv comparando distribuição atual e ideal da carteira com método de rebalanceamento por aporte",
+        caption:
+          "Diversificação: distribuição atual versus ideal com sugestão de rebalanceamento por aporte",
+        width: 1280,
+        height: 712,
+      },
+      {
+        src: "/projects/breakinv/ranking.png",
+        alt: "Ranking de ativos do BreakInv com maiores altas e baixas do dia e gráfico de variação percentual",
+        caption:
+          "Ranking: desempenho diário dos ativos da carteira com cotações atualizadas",
+        width: 1280,
+        height: 712,
+      },
+    ],
     highlights: [
       "Dashboard com visão consolidada da carteira e KPIs de patrimônio e lucro/prejuízo",
       "Snapshot diário para acompanhar a evolução da carteira ao longo do tempo",
@@ -108,6 +165,32 @@ export const projects: Project[] = [
     ],
     repoUrl: "https://github.com/Daniel-Macedo-dev/GuessMe",
     logo: "/projects/guessme-icon.svg",
+    screenshots: [
+      {
+        src: "/projects/guessme/home.png",
+        alt: "Tela inicial do GuessMe com tema de dossiê investigativo, ficha do caso selado e etapas de abertura, interrogação e encerramento",
+        caption:
+          "Home: identidade visual de dossiê investigativo com a ficha do caso e as etapas do jogo",
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: "/projects/guessme/jogo.png",
+        alt: "Tela de investigação ativa do GuessMe com transcrição do interrogatório, consultas rápidas e caderno de evidências",
+        caption:
+          "Jogo: interrogatório com perguntas rápidas, transcrição da partida e caderno de evidências",
+        width: 1280,
+        height: 800,
+      },
+      {
+        src: "/projects/guessme/como-funciona.png",
+        alt: "Página Como Funciona do GuessMe descrevendo o protocolo de interrogação em cinco etapas",
+        caption:
+          "Como funciona: o protocolo do jogo em cinco etapas, com estados de evidência sim, não e talvez",
+        width: 1280,
+        height: 800,
+      },
+    ],
     highlights: [
       "Partidas por categoria (Geral, Anime, Games, Filmes, Séries e Quadrinhos)",
       "Envio de perguntas do jogador e respostas geradas com apoio do Google Gemini",
@@ -136,9 +219,10 @@ export const projects: Project[] = [
   {
     slug: "jovemtour-store",
     name: "JovemTour Store",
-    tagline: "Experiência de loja full-stack com fluxo de interesse e pedidos",
+    tagline:
+      "Landing full-stack de roteiros culturais por São Paulo com captação de interesse",
     summary:
-      "Projeto full-stack de loja/landing com apresentação de produtos e fluxo de leads de interesse/pedido, com frontend em React + Vite + TypeScript + Tailwind CSS integrado a uma API REST em Spring Boot com JPA e MySQL.",
+      "Projeto full-stack do Jovem Tour SP — landing de roteiros culturais por São Paulo com identidade visual própria, mascote e fluxo de captação de interesse, com frontend em React + Vite + TypeScript + Tailwind CSS integrado a uma API REST em Spring Boot com JPA e MySQL.",
     category: "flagship",
     featured: true,
     stack: [
@@ -150,26 +234,62 @@ export const projects: Project[] = [
       "JPA",
       "MySQL",
     ],
+    screenshots: [
+      {
+        src: "/projects/jovemtour-store/hero.png",
+        alt: "Hero da landing do Jovem Tour SP com o título Explore São Paulo, marca do projeto e categorias de arte urbana, gastronomia, história e natureza",
+        caption:
+          "Hero: identidade visual própria do Jovem Tour SP com as categorias de roteiros culturais",
+        width: 1280,
+        height: 700,
+      },
+      {
+        src: "/projects/jovemtour-store/roteiros.png",
+        alt: "Seção de roteiros em destaque com cards do Roteiro Paulista Cultural, Liberdade e Cultura Japonesa, Beco do Batman e Parque Ibirapuera",
+        caption:
+          "Roteiros em destaque: cards com tags temáticas e ações de conhecer o roteiro e manifestar interesse",
+        width: 1280,
+        height: 1090,
+      },
+      {
+        src: "/projects/jovemtour-store/mascote.png",
+        alt: "Seção do mascote oficial Caramelo com a arte da marca e um recado sobre os roteiros em planejamento",
+        caption:
+          "Mascote Caramelo: trabalho real de marca aplicado ao produto",
+        width: 1280,
+        height: 580,
+      },
+      {
+        src: "/projects/jovemtour-store/planejar.png",
+        alt: "Formulário Planejar meu rolê com campos de nome, WhatsApp, área de interesse, tamanho do grupo e consentimento de uso de dados",
+        caption:
+          "Planejar meu rolê: formulário de captação de leads integrado à API, com consentimento explícito",
+        width: 1280,
+        height: 980,
+      },
+    ],
     highlights: [
-      "Apresentação de produtos em uma experiência de loja/landing responsiva",
-      "Fluxo de interesse/pedido para captação de leads",
-      "Integração entre frontend React e API REST em Spring Boot",
+      "Landing responsiva de roteiros culturais por São Paulo com identidade visual e mascote próprios",
+      "Cards de roteiros com categorias temáticas (arte urbana, gastronomia, história e natureza)",
+      "Fluxo de captação de interesse/leads com formulário integrado à API",
+      "Fallback offline no frontend: exibe conteúdo salvo quando a API está indisponível",
       "Persistência relacional com JPA e MySQL",
-      "Interface construída com Tailwind CSS",
     ],
     caseStudy: {
       context:
-        "O JovemTour Store é um projeto orientado a produto: uma experiência de loja/landing em que o visitante conhece os produtos e manifesta interesse ou intenção de pedido. Diferente de um CRUD isolado, o foco está na integração completa entre uma interface de apresentação e um backend que registra esses leads.",
+        "O Jovem Tour SP é um projeto orientado a produto: uma landing de roteiros culturais por São Paulo em que o visitante conhece as experiências — do Roteiro Paulista Cultural ao Beco do Batman — e deixa seu interesse para ser avisado quando elas estiverem disponíveis. Diferente de um CRUD isolado, o foco está na integração completa entre uma interface com identidade forte e um backend que registra esses leads.",
       solution:
-        "Construí o frontend em React + Vite + TypeScript com Tailwind CSS, priorizando uma interface responsiva de apresentação de produtos, e um backend em Spring Boot expondo uma API REST com persistência em MySQL via JPA para registrar o fluxo de interesse/pedidos.",
+        "Construí o frontend em React + Vite + TypeScript com Tailwind CSS, com identidade visual própria (cores, tipografia display e o mascote Caramelo) e uma experiência responsiva de apresentação dos roteiros, e um backend em Spring Boot expondo uma API REST com persistência em MySQL via JPA para registrar o fluxo de interesse. O conteúdo dos roteiros é servido pela API, e o frontend mantém um fallback offline com conteúdo salvo.",
       engineering: [
         "Integração ponta a ponta entre o frontend React e a API REST em Spring Boot",
-        "Modelagem relacional dos dados de produtos e pedidos com JPA e MySQL",
-        "UI responsiva construída com Tailwind CSS e TypeScript",
+        "Modelagem relacional dos dados de roteiros e leads com JPA e MySQL",
+        "Fallback offline no frontend para manter a experiência quando a API está indisponível",
+        "UI responsiva com Tailwind CSS, TypeScript e identidade visual própria",
       ],
       challenges: [
-        "Desenhar um fluxo de interesse/pedido simples para o visitante sem exigir um checkout completo",
+        "Desenhar um fluxo de interesse simples para o visitante sem exigir cadastro ou checkout",
         "Manter contratos consistentes entre frontend e backend durante a evolução do projeto",
+        "Construir uma identidade visual de marca (e não um template) mantendo a implementação enxuta",
       ],
     },
   },

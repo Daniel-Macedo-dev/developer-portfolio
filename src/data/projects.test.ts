@@ -52,6 +52,27 @@ describe("integridade dos dados de projetos", () => {
     }
   });
 
+  it("aponta screenshots para arquivos reais com alt, legenda e dimensões", () => {
+    for (const project of projects) {
+      for (const shot of project.screenshots ?? []) {
+        expect(
+          existsSync(path.join(process.cwd(), "public", shot.src)),
+          `arquivo ausente: ${shot.src}`,
+        ).toBe(true);
+        expect(shot.alt.trim().length).toBeGreaterThan(10);
+        expect(shot.caption.trim()).not.toBe("");
+        expect(shot.width).toBeGreaterThan(0);
+        expect(shot.height).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it("dá screenshots reais a todos os projetos em destaque", () => {
+    for (const project of featuredProjects) {
+      expect(project.screenshots?.length ?? 0).toBeGreaterThanOrEqual(3);
+    }
+  });
+
   it("marca como destaque apenas projetos flagship", () => {
     for (const project of projects) {
       if (project.featured) {
