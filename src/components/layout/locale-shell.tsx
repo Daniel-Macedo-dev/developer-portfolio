@@ -1,3 +1,4 @@
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Geist, Geist_Mono } from "next/font/google";
 import type { ReactNode } from "react";
 
@@ -44,6 +45,8 @@ export function LocaleShell({ locale, children }: LocaleShellProps) {
           {children}
         </main>
         <Footer locale={locale} />
+        {/* Web Vitals reais (cookieless, sem PII); coleta só em produção. */}
+        <SpeedInsights />
       </body>
     </html>
   );
