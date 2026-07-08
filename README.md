@@ -10,7 +10,8 @@ Portfólio pessoal de [Daniel Macedo Silva](https://github.com/Daniel-Macedo-dev
 - [React 19](https://react.dev) + [TypeScript](https://www.typescriptlang.org)
 - [Tailwind CSS v4](https://tailwindcss.com) (tokens de design via `@theme`)
 - [Motion](https://motion.dev) para animações de entrada (com suporte a `prefers-reduced-motion`)
-- [Vitest](https://vitest.dev) + Testing Library para testes
+- [Vitest](https://vitest.dev) + Testing Library para testes unitários
+- [Playwright](https://playwright.dev) (Chromium) para jornadas E2E e QA visual
 
 ## Requisitos
 
@@ -27,12 +28,22 @@ npm run dev      # servidor de desenvolvimento em http://localhost:3000
 Outros comandos:
 
 ```bash
-npm run lint     # ESLint
-npm run build    # build de produção
-npm run start    # serve o build de produção
-npm run test     # testes (Vitest, execução única)
+npm run lint       # ESLint
+npm run build      # build de produção
+npm run start      # serve o build de produção
+npm run test       # testes unitários (Vitest, execução única)
 npm run test:watch
+npm run test:e2e   # jornadas de browser (Playwright; faz build + start sozinho)
+npm run qa:visual  # captura screenshots das rotas em 8 viewports (.qa-screenshots/)
 ```
+
+Para os comandos de browser é preciso instalar o Chromium do Playwright uma vez:
+
+```bash
+npx playwright install chromium
+```
+
+O `qa:visual` espera um servidor já em execução (`npm run build && npm run start`).
 
 ## Estrutura
 
@@ -74,15 +85,28 @@ Ver `.env.example`.
 
 ## Deploy
 
-O projeto está pronto para a Vercel (ou qualquer host com suporte a Next.js): build estático, sem backend, sem banco de dados e sem segredos. Basta configurar `NEXT_PUBLIC_SITE_URL` com o domínio de produção.
+O projeto está pronto para a Vercel (ou qualquer host com suporte a Next.js): build estático, sem backend, sem banco de dados e sem segredos.
+
+Checklist de deploy:
+
+1. Importar o repositório na Vercel (framework Next.js detectado automaticamente; sem `vercel.json` — não é necessário).
+2. Configurar a variável `NEXT_PUBLIC_SITE_URL` com o domínio de produção (ex.: `https://<projeto>.vercel.app`).
+3. Deploy — todas as rotas são estáticas/SSG; sitemap, robots, favicon e imagem OG são gerados no build.
+4. Pós-deploy: conferir `/sitemap.xml`, `/robots.txt` e a pré-visualização de compartilhamento (OG) com o domínio real.
+
+## Mídia dos projetos
+
+- As marcas em `public/projects/` são os ícones oficiais dos próprios projetos, copiados dos repositórios originais (proveniência verificada).
+- Não existem screenshots reais de interface nos repositórios públicos; nada foi fabricado. As capturas que mais agregariam no futuro: dashboard do BreakInv, partida do GuessMe e vitrine do JovemTour Store.
 
 ## Limitações conhecidas
 
-- Sem imagens/screenshots reais dos projetos por enquanto — os cards e case studies foram desenhados para funcionar bem sem mídia; há espaço para adicionar mídia real no futuro.
+- Sem screenshots reais das interfaces dos projetos (ver seção acima).
 - Conteúdo apenas em português (pt-BR) nesta versão.
+- E2E cobre apenas Chromium (desktop + mobile emulado).
 
 ## Direções futuras (não implementadas)
 
-- Screenshots e mídia real dos projetos nos case studies
+- Screenshots reais dos projetos nos case studies
 - Versão em inglês
 - Textos técnicos longos (possível adoção de MDX quando houver conteúdo editorial)
