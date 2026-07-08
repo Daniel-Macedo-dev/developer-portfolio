@@ -2,7 +2,7 @@
 
 Portfólio pessoal de [Daniel Macedo Silva](https://github.com/Daniel-Macedo-dev) — desenvolvimento de software, backend e soluções orientadas a dados.
 
-**Produção:** https://developer-portfolio-umber-five.vercel.app
+**Produção:** https://developer-portfolio-umber-five.vercel.app (pt-BR) · [/en](https://developer-portfolio-umber-five.vercel.app/en) (English)
 
 ## Stack
 
@@ -71,6 +71,10 @@ src/
     projects.ts         # projetos, categorias, destaque e case studies
 ```
 
+## Idiomas
+
+O site é bilíngue com URLs estáveis: português na raiz (`/`, `/projects`, …) e inglês sob `/en`. Sem framework de i18n — dicionários tipados em `src/data/locales.ts` (modelo) e `src/data/ui.ts` (strings de interface); o conteúdo editorial dos projetos vive em `projects.ts` com `content: { "pt-BR", en }`. Cada idioma tem seu próprio root layout (route group) para `html lang` correto; canonical + hreflang (`x-default` → pt-BR) são gerados por rota, e o sitemap cobre os dois idiomas. Testes garantem paridade estrutural do conteúdo entre idiomas.
+
 ## Gestão de conteúdo
 
 Todo o conteúdo vive em `src/data/` com tipos TypeScript:
@@ -112,14 +116,23 @@ Todas as imagens em `public/projects/` têm proveniência verificada:
 
 Os metadados de cada imagem (alt, legenda, dimensões) vivem no modelo tipado em `src/data/projects.ts` e são verificados por testes.
 
+## Dados estruturados e busca
+
+- JSON-LD factual mínimo: `Person` e `WebSite` na home e `SoftwareSourceCode` por projeto — somente dados públicos verificados (sem cargos, métricas ou perfis inventados), com testes de shape.
+- **Search Console (passos futuros, sem token inventado):** criar a propriedade URL-prefix para a URL de produção, verificar por meta tag (adicionar o token real via metadata `verification.google` ou arquivo HTML em `public/`) e submeter `/sitemap.xml`. O mesmo sitemap serve para o Bing Webmaster (que aceita importar do Search Console).
+
+## Observabilidade
+
+Web Vitals reais via [Vercel Speed Insights](https://vercel.com/docs/speed-insights) (`@vercel/speed-insights`, componente no shell dos dois idiomas). Escopo: métricas de performance anônimas (LCP, CLS, INP, rota, dispositivo) coletadas pela Vercel; **sem cookies, sem identificadores de usuário, sem PII** — nenhum banner de consentimento é necessário. Plano Hobby: gratuito com limite mensal (pausa ao atingir, sem cobrança). Para remover: apagar o componente em `locale-shell.tsx` e a dependência.
+
 ## Limitações conhecidas
 
-- Conteúdo apenas em português (pt-BR) nesta versão.
 - E2E cobre apenas Chromium (desktop + mobile emulado).
+- URLs totalmente fora das rotas (ex.: `/xyz`) retornam o 404 padrão do Next com status correto; os 404 estilizados e localizados cobrem os slugs inválidos de projeto (consequência de múltiplos root layouts — a alternativa exigiria uma flag experimental).
 - O fluxo de jogo do GuessMe com respostas da IA não pôde ser capturado (chave da API indisponível no ambiente de captura); as telas integradas mostram estados reais pré-partida.
 
 ## Direções futuras (não implementadas)
 
-- Versão em inglês
+- Verificação real no Google Search Console e submissão do sitemap
 - Captura do fluxo de jogo do GuessMe com respostas reais da IA
 - Textos técnicos longos (possível adoção de MDX quando houver conteúdo editorial)
