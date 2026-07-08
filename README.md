@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# developer-portfolio
 
-## Getting Started
+Portfólio pessoal de [Daniel Macedo Silva](https://github.com/Daniel-Macedo-dev) — desenvolvimento de software, backend e soluções orientadas a dados.
 
-First, run the development server:
+**Status:** primeira versão completa, pronta para deploy (ainda não publicada).
+
+## Stack
+
+- [Next.js 16](https://nextjs.org) (App Router, Turbopack, rotas 100% estáticas)
+- [React 19](https://react.dev) + [TypeScript](https://www.typescriptlang.org)
+- [Tailwind CSS v4](https://tailwindcss.com) (tokens de design via `@theme`)
+- [Motion](https://motion.dev) para animações de entrada (com suporte a `prefers-reduced-motion`)
+- [Vitest](https://vitest.dev) + Testing Library para testes
+
+## Requisitos
+
+- Node.js 20.9+ (desenvolvido com Node 22)
+- npm
+
+## Como rodar
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # servidor de desenvolvimento em http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Outros comandos:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run lint     # ESLint
+npm run build    # build de produção
+npm run start    # serve o build de produção
+npm run test     # testes (Vitest, execução única)
+npm run test:watch
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Estrutura
 
-## Learn More
+```
+src/
+  app/                  # rotas (App Router)
+    projects/           # índice de projetos
+    projects/[slug]/    # páginas de detalhe geradas do modelo de conteúdo
+    about/              # sobre
+    sitemap.ts          # sitemap gerado
+    robots.ts           # robots.txt
+    icon.tsx            # favicon gerado no build
+    opengraph-image.tsx # imagem social gerada no build
+  components/           # layout, seções da home, cards de projeto, primitivas
+  data/                 # fonte única de conteúdo tipado
+    site.ts             # identidade, links e navegação
+    profile.ts          # áreas de atuação e formação
+    projects.ts         # projetos, categorias, destaque e case studies
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Gestão de conteúdo
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Todo o conteúdo vive em `src/data/` com tipos TypeScript:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Adicionar um projeto**: incluir um novo objeto em `projects.ts`. A rota `/projects/<slug>`, o card, o sitemap e a metadata são gerados automaticamente.
+- **Destacar um projeto**: `featured: true` (apenas projetos `flagship`).
+- **Link de repositório**: o campo `repoUrl` é opcional — projetos sem repositório público simplesmente não exibem o link.
+- **Case study**: o bloco `caseStudy` (contexto, solução, decisões de engenharia, arquitetura, desafios) é opcional; projetos menores usam tratamento mais leve.
 
-## Deploy on Vercel
+A integridade desses dados é verificada por testes (`src/data/projects.test.ts`).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Variáveis de ambiente
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Variável | Uso |
+| --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | URL pública do site, usada em metadata, sitemap e Open Graph. Fallback local: `http://localhost:3000`. |
+
+Ver `.env.example`.
+
+## Deploy
+
+O projeto está pronto para a Vercel (ou qualquer host com suporte a Next.js): build estático, sem backend, sem banco de dados e sem segredos. Basta configurar `NEXT_PUBLIC_SITE_URL` com o domínio de produção.
+
+## Limitações conhecidas
+
+- Sem imagens/screenshots reais dos projetos por enquanto — os cards e case studies foram desenhados para funcionar bem sem mídia; há espaço para adicionar mídia real no futuro.
+- Conteúdo apenas em português (pt-BR) nesta versão.
+
+## Direções futuras (não implementadas)
+
+- Screenshots e mídia real dos projetos nos case studies
+- Versão em inglês
+- Textos técnicos longos (possível adoção de MDX quando houver conteúdo editorial)
