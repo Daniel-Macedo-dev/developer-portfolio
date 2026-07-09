@@ -124,7 +124,8 @@ Os metadados de cada imagem (alt, legenda, dimensões) vivem no modelo tipado em
 - JSON-LD factual mínimo: `Person` e `WebSite` na home e `SoftwareSourceCode` por projeto — somente dados públicos verificados (sem cargos, métricas ou perfis inventados), com testes de shape.
 - **Compartilhamento social:** cada página emite `og:image`/`twitter:image` apontando para a imagem do próprio idioma (`/og/pt-BR`, `/og/en`), com título, descrição, `og:url` e alt localizados. As imagens são geradas no build por uma rota estática explícita (`src/app/og/[locale]/route.tsx`) — rota explícita em vez da convenção `opengraph-image` porque páginas com `openGraph` próprio perdiam a imagem herdada no merge de metadata.
 - **Presença em busca (auditada em 2026-07-08):** consultas `site:` no Google, Bing e DuckDuckGo não retornaram resultados para o domínio de produção — classificação: *não encontrado nos resultados públicos auditados* (indexação ainda pendente; o domínio `.vercel.app` é novo para os crawlers). Fetches com user agents de crawler (Googlebot, Bingbot, LinkedInBot, Twitterbot, facebookexternalhit) recebem 200 com HTML e metadata completos — não há bloqueio técnico.
-- **Search Console (pendente de acesso autenticado):** criar a propriedade URL-prefix para a URL de produção, verificar por meta tag — basta configurar `GOOGLE_SITE_VERIFICATION` na Vercel com o token real e redeployar — e submeter `/sitemap.xml`. O mesmo sitemap serve para o Bing Webmaster (que aceita importar do Search Console). IndexNow foi avaliado e rejeitado: site estático com mudanças raras não justifica a manutenção de chave/submissões.
+- **Search Console (pendente de acesso autenticado; reauditado em 2026-07-08):** criar a propriedade URL-prefix para a URL de produção, verificar por meta tag — basta configurar `GOOGLE_SITE_VERIFICATION` na Vercel com o token real e redeployar — e submeter `/sitemap.xml`. O mesmo sitemap serve para o Bing Webmaster (que aceita importar do Search Console).
+- **IndexNow (implementado em 2026-07-08):** decisão de V5 revisitada — sem acesso autenticado ao Bing Webmaster, o IndexNow é o único canal sem credencial para iniciar a descoberta no Bing. Implementação mínima: arquivo de chave estático em `public/` (a chave é pública por definição do protocolo, não é segredo) e uma submissão única das URLs do sitemap via `api.indexnow.org`. Sem lógica por deploy — mudanças futuras continuam dependendo do sitemap. Submissão aceita ≠ indexação.
 
 ## Observabilidade
 
@@ -134,9 +135,9 @@ Web Vitals reais via [Vercel Speed Insights](https://vercel.com/docs/speed-insig
 
 - Firefox e WebKit cobrem as jornadas de alto valor, não a suíte E2E completa (decisão intencional de custo/benefício).
 - Sem acesso autenticado ao Search Console/Bing Webmaster no ambiente de desenvolvimento: propriedade não verificada e sitemap não submetido — o suporte via `GOOGLE_SITE_VERIFICATION` deixa a verificação a um passo (configurar env + redeploy).
-- Speed Insights está ativo em produção (script servido, endpoint de vitals respondendo), mas os dados de campo do dashboard não são acessíveis por CLI/API — nenhum número de campo é afirmado aqui.
+- Speed Insights está ativo e coletando (dados consultados via `vercel metrics` em 2026-07-08), mas a amostra é insuficiente para conclusões: 4 datapoints de LCP em 7 dias, todos Firefox desktop nas rotas `/` e `/en` — assinatura compatível com as execuções de E2E de produção, não com tráfego humano. Nenhuma métrica de campo é tratada como RUM real até haver volume orgânico.
 - URLs totalmente fora das rotas (ex.: `/xyz`) retornam o 404 padrão do Next com status correto; os 404 estilizados e localizados cobrem os slugs inválidos de projeto (consequência de múltiplos root layouts — a alternativa exigiria uma flag experimental).
-- O fluxo de jogo do GuessMe com respostas da IA não pôde ser capturado (chave da API indisponível no ambiente de captura); as telas integradas mostram estados reais pré-partida.
+- O fluxo de jogo do GuessMe com respostas da IA não pôde ser capturado (verificado em 2026-07-08: a credencial Gemini armazenada localmente é inválida — a API respondeu `API key not valid`); as telas integradas mostram estados reais pré-partida. Nenhuma resposta de IA foi simulada.
 
 ## Direções futuras (não implementadas)
 
