@@ -43,4 +43,10 @@ describe("sitemap", () => {
       expect(entry.url).toMatch(/^http:\/\/localhost:3000/);
     }
   });
+
+  it("serializa priority de forma determinística com uma casa decimal", () => {
+    for (const entry of sitemap()) {
+      expect(String(entry.priority)).toMatch(/^(0\.\d|1)$/);
+    }
+  });
 });

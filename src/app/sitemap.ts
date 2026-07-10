@@ -29,7 +29,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     };
     return locales.map((locale) => ({
       url: `${siteUrl}${localePath(path, locale)}`,
-      priority: locale === "pt-BR" ? priority : priority - 0.1,
+      // Arredonda para uma casa decimal: 0.8 - 0.1 em ponto flutuante
+      // produziria 0.7000000000000001 no XML publicado.
+      priority:
+        locale === "pt-BR"
+          ? priority
+          : Math.round((priority - 0.1) * 10) / 10,
       alternates: { languages },
     }));
   });
